@@ -1,0 +1,116 @@
+#
+# A couple of useful guides & docs:
+#
+# - Main Bitrise CLI docs: https://github.com/bitrise-io/bitrise/tree/master/_docs
+# - Step Development Guideline: https://github.com/bitrise-io/bitrise/blob/master/_docs/step-development-guideline.md
+# - Bitrise.yml format spec: https://github.com/bitrise-io/bitrise/blob/master/_docs/bitrise-yml-format-spec.md
+# - Bitrise docs: http://devcenter.bitrise.io/
+# - Bitrise CLI guides: http://devcenter.bitrise.io/bitrise-cli/
+
+title: |-
+  Run iOS Maestro Flows
+summary: |
+  Runs Maestro Flows on iOS Simulator
+description: |
+  This steps runs your Maestro Flows on iOS Simulator and exports a test report and a video recording.
+    This step does not give any output but puts test results in deploy folder if requested.
+website: https://github.com/fepersembe/bitrise-step-maestro-ios-test-run.git
+source_code_url: https://github.com/fepersembe/bitrise-step-maestro-ios-test-run.git
+support_url: https://github.com/fepersembe/bitrise-step-maestro-ios-test-run.git/issues
+host_os_tags:
+  - osx-10.10
+
+# If this step should be available only for certain project types
+# just uncomment this `project_type_tags` section and include all the
+# project types supported by the step. If the step can be used for all
+# project types then you can just remove this section.
+# If no `project_type_tags` specified (or specified as an empty array)
+# that means the step can be used for any project type.
+# You can find more information about project type tags in the Step Development Guideline:
+# https://github.com/bitrise-io/bitrise/blob/master/_docs/step-development-guideline.md
+#
+project_type_tags:
+  - ios
+  - xamarin
+  - react-native
+  - cordova
+  - ionic
+  - flutter
+
+# Type tags are used for categorizing steps, for easier step discovery in Step Libraries.
+# You can find more information about type tags in the Step Development Guideline:
+# https://github.com/bitrise-io/bitrise/blob/master/_docs/step-development-guideline.md
+type_tags:
+  - test
+
+# These properties define whether a Step is run in a given Workflow or not.
+# You can find more information about this in the documentation here:
+# https://devcenter.bitrise.io/en/steps-and-workflows/developing-your-own-bitrise-step/developing-a-new-step.html#setting-conditions-for-running-the-step
+#
+is_always_run: false
+is_skippable: false
+run_if: ""
+
+# Use the `deps` property to declare dependencies that you can fetch from an OS dependency manager.
+# You can find more information about this in the documentation here:
+# https://devcenter.bitrise.io/en/steps-and-workflows/developing-your-own-bitrise-step/developing-a-new-step.html#submodules-and-step-dependencies
+#
+deps:
+  brew:
+    - name: git
+    - name: wget
+  apt_get:
+    - name: git
+    - name: wget
+
+toolkit:
+  bash:
+    entry_file: step.sh
+inputs:
+  - app_file: ""
+    opts:
+      title: "App File"
+      summary: "App binary to run your Flows against"
+      description: |
+        **iOS**: `app_file` should point to an x86 compatible Simulator build packaged as an **.app**. 
+          **Hint:** Output Varaible **$BITRISE_APP_DIR_PATH** from **Xcode Build for Simulator** step can be used. 
+      is_expand: true
+      is_required: true
+  - workspace: ".maestro"
+    opts:
+      title: "Flow workspace"
+      summary: Flow file or directory
+      description: |
+        A single maestro flow file or directroy that includes Maestro Flows.
+      is_expand: true
+      is_required: true
+  - additional_params: ""
+    opts:
+      title: "Additional Maestro Parameters"
+      summary: "Additional parameters of Maestro CLI command i.e --include-tags dev,pull-request"
+      description: ""
+      is_expand: true
+      is_required: false
+  - additional_params: ""
+    opts:
+      title: "Additional Maestro Parameters"
+      summary: "Additional parameters of Maestro CLI command i.e --include-tags dev,pull-request"
+      description: ""
+      is_expand: true
+      is_required: false
+  - export_test_report: "true"
+    opts:
+      title: "Export test report (JUnit) and Video(mp4) to Deploy Directory"
+      summary: "Generate test suite report (JUnit) and video(mp4)"
+      description: "Exports Test Report to Bitrise Test Result Page and Deploy Dir. Report and video will be available for download as artifacts."
+      value_options:
+        - "true"
+        - "false"
+      is_required: false
+  - maestro_cli_version: ""
+    opts:
+      title: "Maestro CLI version"
+      summary: "Maestro CLI version to be downloaded in your CI (Default: latest)"
+      description: ""
+      is_expand: true
+      is_required: false
