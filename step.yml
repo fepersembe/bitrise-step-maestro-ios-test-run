@@ -73,7 +73,7 @@ inputs:
       summary: "App binary to run your Flows against"
       description: |
         **iOS**: `app_file` should point to an x86 compatible Simulator build packaged as an **.app**. 
-          **Hint:** Output Varaible **$BITRISE_APP_DIR_PATH** from **Xcode Build for Simulator** step can be used. 
+          **Hint:** Output Varaible `$BITRISE_APP_DIR_PATH` from **Xcode Build for Simulator** step can be used. 
       is_expand: true
       is_required: true
   - workspace: ".maestro"
@@ -87,14 +87,7 @@ inputs:
   - additional_params: ""
     opts:
       title: "Additional Maestro Parameters"
-      summary: "Additional parameters of Maestro CLI command i.e --include-tags dev,pull-request"
-      description: ""
-      is_expand: true
-      is_required: false
-  - additional_params: ""
-    opts:
-      title: "Additional Maestro Parameters"
-      summary: "Additional parameters of Maestro CLI command i.e --include-tags dev,pull-request"
+      summary: "Additional parameters of Maestro CLI command i.e --include-tags=dev,pull-request"
       description: ""
       is_expand: true
       is_required: false

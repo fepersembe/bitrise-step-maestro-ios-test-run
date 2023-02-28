@@ -1,9 +1,12 @@
 # maestro-ios-test-run
 
-[EXPERIMENTAL] Not Production Ready Yet. 
-
 This steps runs your Maestro Flows on Bitrise and exports a test report and a video recording.
 
+**Requirements:**
+Before running this step, you need to have 2 things ready, A booted simulator and a simulator executable(.app file).
+To extract .app file , you can use **Xcode Build For Simulator** step and its output **$BITRISE_APP_DIR_PATH**. And to boot a simulator **Start Xcode simulator** can be used. 
+
+Maestro uses the booted simulator automatically. 
 
 ## How to use this Step
 
