@@ -21,7 +21,7 @@ echo "MAESTRO INSTALLED - Check Version"
 maestro -v
 
 # Run Maestro Cloud
-xcrun simctl install booted $app_file
+xcrun simctl install booted "$app_file"
 xcrun simctl io booted recordVideo --codec=h264 -f $BITRISE_DEPLOY_DIR/ui_tests.mp4 &
 maestro test $workspace/ --format junit --output $BITRISE_DEPLOY_DIR/test_report.xml $additional_params || true
 killall -SIGINT simctl
